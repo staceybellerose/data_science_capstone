@@ -80,9 +80,12 @@ app.layout = html.Div(children=[html.H1('SpaceX Launch Records Dashboard',
 def get_launch_data(launch_site):
     if launch_site == 'all':
         fig = px.pie(spacex_df, values='class', names='Launch Site')
+        fig.update_traces(textinfo='value')
+        fig.update_layout(title='Successful Launches')
     else:
         fig = px.pie(spacex_df[spacex_df['Launch Site']==str(launch_site)].groupby('class').count().reset_index(), values='Launch Site', names='class')
-    fig.update_layout(title='Successful Launches')
+        fig.update_traces(marker_colors=['#ef553b','#00cc96'])
+        fig.update_layout(title='Successful Launches for %s' % launch_site)
     return fig
 
 # TASK 4:
